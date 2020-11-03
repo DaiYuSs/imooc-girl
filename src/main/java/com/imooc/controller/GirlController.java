@@ -1,12 +1,15 @@
 package com.imooc.controller;
 
 import com.imooc.domain.Girl;
+import com.imooc.domain.Result;
 import com.imooc.repository.GirlRepository;
 import com.imooc.service.GirlService;
+import com.imooc.utils.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.swing.text.html.ObjectView;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -36,20 +39,19 @@ public class GirlController {
     /**
      * 添加一个女生
      *
-     * @param cupSize
-     * @param age
+     * @param girl
+     * @param bindingResult
      * @return
      */
     @PostMapping(value = "/girls")
-    public Girl girlAdd(@Valid Girl girl, BindingResult bindingResult) {
+    public Result<Girl> girlAdd(@Valid Girl girl, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            System.out.println(bindingResult.getFieldError().getDefaultMessage());
-            return null;
+            return ResultUtil.error(1, bindingResult.getFieldError().getDefaultMessage());
         }
         girl.setCupSize(girl.getCupSize());
         girl.setAge(girl.getAge());
 
-        return girlRepository.save(girl);
+        return ResultUtil.success(girlRepository.save(girl));
     }
 
     //查询一个女生
