@@ -1,6 +1,8 @@
 package com.imooc.service;
 
 import com.imooc.domain.Girl;
+import com.imooc.enums.ResultEnum;
+import com.imooc.exception.GirlException;
 import com.imooc.repository.GirlRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,5 +30,15 @@ public class GirlService {
         girlB.setCupSize("BBBB");
         girlB.setAge(19);
         girlRepository.save(girlB);
+    }
+
+    public void getAge(Integer id) throws Exception {
+        Girl girl = girlRepository.findOne(id);
+        Integer age = girl.getAge();
+        if (age < 10) {
+            throw new GirlException(ResultEnum.PRIMARY_SCHOOL);
+        } else if (age < 16) {
+            throw new GirlException(ResultEnum.MIDDLE_SCHOOL);
+        }
     }
 }
