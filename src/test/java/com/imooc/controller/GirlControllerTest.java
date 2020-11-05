@@ -1,0 +1,30 @@
+package com.imooc.controller;
+
+import junit.framework.TestCase;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+
+/**
+ * @author ljj
+ * @version 1.0
+ * @date 2020/11/5
+ */
+@RunWith(SpringRunner.class)
+@SpringBootTest
+@AutoConfigureMockMvc
+public class GirlControllerTest extends TestCase {
+
+    @Autowired
+    private MockMvc mvc;
+
+    public void testGirlList() throws Exception {
+//         mvc.perform(MockMvcRequestBuilders.get("/girls")).andExpect(MockMvcResultMatchers.status().isOk()); 判断请求回来的状态
+        mvc.perform(MockMvcRequestBuilders.get("/girls")).andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.content().string("aaa")); // 判断controller返回值是不是该字符串
+    }
+}
